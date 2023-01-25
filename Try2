@@ -72,3 +72,26 @@ local function CreateVehicleSpawnMenu(ply, ent)
         ent:SpawnVehicle(ply, "models/props_c17/furnitureStove001a.mdl")
     end
 end
+
+    -- Create a button for the sports car
+    local button2 = vgui.Create("DButton", frame)
+    button2:SetText("Spawn Sports Car")
+    button2:SetPos(25, 110)
+    button2:SetSize(250, 50)
+    button2.DoClick = function()
+        ent:SpawnVehicle(ply, "sportscar")
+    end
+end
+
+
+-- Function to spawn a vehicle
+function ENT:SpawnVehicle(ply, vehicle)
+    -- Check if the player has the necessary permissions
+    if not table.HasValue({"superadmin", "admin"}, ply:GetUserGroup()) then 
+        ply:ChatPrint("You do not have permission to use this spawner.")
+        return 
+    end
+
+    -- Spawn the vehicle
+    ply:ConCommand("gm_spawn " .. vehicle)
+end
