@@ -103,3 +103,5 @@ function ENT:SpawnVehicle(ply, vehicle)
     -- Spawn the vehicle
     ply:ConCommand("gm_spawn " .. vehicle)
 end
+
+--include("path/to/orange_bugatti_spawn.lua")
