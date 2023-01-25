@@ -95,4 +95,5 @@ function ENT:SpawnVehicle(ply, vehicle)
     ply:ConCommand("gm_spawn " .. vehicle)
 end
 
+-- the text below goes in [garrysmod>cfg>autoexec.lua]
 --include("path/to/orange_bugatti_spawn.lua")
