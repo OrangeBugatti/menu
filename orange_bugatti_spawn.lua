@@ -24,33 +24,25 @@ function ENT:OpenVehicleMenu(ply)
         return 
     end
     -- Open the menu
-    -- You would need to create a separate function to actually spawn the vehicles
-    -- and call it from the menu
-    ply:ConCommand("open_vehicle_spawn_menu")
+    CreateVehicleSpawnMenu(ply, self)
 end
 
 -- Check for "e" button press on the entity
 hook.Add("PlayerUse", "CheckEntityPress", function(ply, ent)
-    if ent == ent and ply:KeyDown(IN_USE) then
+    if ent:GetClass() == ENT.ClassName and ply:KeyDown(IN_USE) then
         ent:OpenVehicleMenu(ply)
     end
 end)
-
 
 -- Register the entity with the engine
 scripted_ents.Register(ENT, ENT.ClassName, true)
 
 -- Add your entity to the spawn menu
-list.Set( "SpawnableEntities", "spawner", { "models/props_c17/furnitureStove001a.mdl", "spawner" } )
+list.Set("SpawnableEntities", ENT.ClassName, { "models/props_c17/furnitureStove001a.mdl", ENT.ClassName } )
 
 -- Create a new category for your custom entity
-list.SetCategory("Vehicle Spawner", "spawner", "Vehicle Spawner")
+list.SetCategory("Vehicle Spawner", ENT.ClassName, "Vehicle Spawner")
 
--- Function to open the vehicle spawn menu
-function ENT:OpenVehicleMenu(ply)
-    -- Check if the player has the necessary permissions
-    if not table.HasValue({"superadmin", "admin"}, ply:GetUserGroup()) then 
-        ply:ChatPrint("You do not have permission to use this spawner.")
 -- Function to spawn a vehicle
 function ENT:SpawnVehicle(ply, vehicle)
     -- Check if the player has the necessary permissions
@@ -63,9 +55,8 @@ function ENT:SpawnVehicle(ply, vehicle)
     ply:ConCommand("gm_spawn " .. vehicle)
 end
 
-
 -- Create the menu
-local function CreateVehicleSpawnMenu(ply)
+local function CreateVehicleSpawnMenu(ply, ent)
     local frame = vgui.Create("DFrame")
     frame:SetSize(300, 300)
     frame:Center()
